@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import {filterImageFromURL, deleteLocalFiles} from './util/util';
+import {filterImageFromURL, deleteLocalFiles, isValidUrl} from './util/util';
 
 (async () => {
 
@@ -13,7 +13,8 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   // Use the body parser middleware for post requests
   app.use(bodyParser.json());
 
-  // @TODO1 IMPLEMENT A RESTFUL ENDPOINT
+  
+
   // GET /filteredimage?image_url={{URL}}
   // endpoint to filter an image from a public url.
   // IT SHOULD
@@ -26,10 +27,23 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   //    image_url: URL of a publicly accessible image
   // RETURNS
   //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
+  app.get( "/filteredimage", async ( req, res ) => {
+    let { image_url } = req.query;
 
-  /**************************************************************************** */
+    // Validate the image_url query
+    if (!image_url || !isValidUrl(image_url)) {
+      return res.status(400).send(`image_url parameter is missing or malformed`);
+    }
 
-  //! END @TODO1
+    // Filter the image and send the file as response, deleting it on finish
+    let image_path = await filterImageFromURL(image_url);
+    res.status(200).sendFile(image_path);
+    res.on('finish', () => {
+      deleteLocalFiles([image_path]);
+    });
+    
+  } );
+
   
   // Root Endpoint
   // Displays a simple message to the user
