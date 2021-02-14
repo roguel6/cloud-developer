@@ -10,20 +10,32 @@ exports.handler = async (event) => {
   console.log('Processing event: ', event)
 
   // TODO: Read and parse "limit" and "nextKey" parameters from query parameters
-  // let nextKey // Next key to continue scan operation if necessary
-  // let limit // Maximum number of elements to return
+  let nextKey = JSON.parse(decodeURIComponent(getQueryParameter(event, "nextKey")))// Next key to continue scan operation if necessary
+  let limit  = getQueryParameter(event, "limit")// Maximum number of elements to return
 
   // HINT: You might find the following method useful to get an incoming parameter value
   // getQueryParameter(event, 'param')
 
+
   // TODO: Return 400 error if parameters are invalid
+  if (!nextKey || !limit) {
+    return {
+      statusCode: 400,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: JSON.stringify({
+        error: 'Invalid parameters'
+      })
+    }
+  }
 
   // Scan operation parameters
   const scanParams = {
     TableName: groupsTable,
     // TODO: Set correct pagination parameters
-    // Limit: ???,
-    // ExclusiveStartKey: ???
+    Limit: nextKey,
+    ExclusiveStartKey: limit
   }
   console.log('Scan params: ', scanParams)
 
