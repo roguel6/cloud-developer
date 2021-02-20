@@ -1,3 +1,8 @@
+/**
+ * Lamba function to create a new todo
+ */
+
+
 import 'source-map-support/register'
 import {
   APIGatewayProxyEvent,

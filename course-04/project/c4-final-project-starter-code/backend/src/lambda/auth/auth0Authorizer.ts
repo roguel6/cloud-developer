@@ -13,8 +13,8 @@ const logger = createLogger('auth')
 
 // Provide a URL that can be used to download a certificate that can be used
 // to verify JWT token signature.
-// To get this URL you need to go to an Auth0 page -> Show Advanced Settings -> Endpoints -> JSON Web Key Set
-const jwksUrl = 'https://udagramapp.eu.auth0.com/.well-known/jwks.json'
+const jwksUrl = process.env.JWKS_URL
+
 
 export const handler = async (
   event: CustomAuthorizerEvent
@@ -61,6 +61,11 @@ export const handler = async (
 }
 
 
+/**
+ * Get the signing keys for a specific kid in the jwt header
+ * @param jwt_header_kid the kid to search for in jwt header
+ * @returns all available signing keys for this kid
+ */
 async function getSigningKeys(jwt_header_kid) {
   try {
     logger.info('Getting the certificate for kid from url', {
@@ -103,6 +108,12 @@ async function getSigningKeys(jwt_header_kid) {
 
 }
 
+
+/**
+ * Verify a jwt token
+ * @param authHeader the authentication header
+ * @returns a jwt payload
+ */
 async function verifyToken(authHeader: string): Promise<JwtPayload> {
   const token = getToken(authHeader)
   logger.info('Token', {
@@ -122,6 +133,12 @@ async function verifyToken(authHeader: string): Promise<JwtPayload> {
 }
 
 
+
+/**
+ * Get a jwt Token
+ * @param authHeader the authentication header
+ * @returns a jwt token
+ */
 export function getToken(authHeader: string): string {
   if (!authHeader) throw new Error('No authentication header')
 

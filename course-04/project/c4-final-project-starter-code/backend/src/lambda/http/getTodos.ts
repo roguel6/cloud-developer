@@ -1,3 +1,8 @@
+/**
+ * Lamba function to get the todos for an user
+ */
+
+
 import 'source-map-support/register'
 import {
   APIGatewayProxyEvent,

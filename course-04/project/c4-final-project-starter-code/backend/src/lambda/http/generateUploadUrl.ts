@@ -1,3 +1,8 @@
+/**
+ * Lamba function to generate an upload url
+ */
+
+
 import 'source-map-support/register'
 import {
   APIGatewayProxyEvent,

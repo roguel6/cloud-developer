@@ -23,6 +23,7 @@ provider:
     TODOS_TABLE_SEC_INDEX: searchByUserId
     IMAGES_S3_BUCKET: todos-wefsdf-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
+    JWKS_URL: https://udagramapp.eu.auth0.com/.well-known/jwks.json
 
 
 custom:

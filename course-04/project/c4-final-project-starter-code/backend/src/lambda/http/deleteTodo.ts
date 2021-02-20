@@ -1,3 +1,8 @@
+/**
+ * Lamba function to delete a todo
+ */
+
+
 import 'source-map-support/register'
 import { createLogger } from '../../utils/logger'
 import {
