@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "updateProduct",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number"
+    },
+    "stock": {
+      "type": "number"
+    },
+    "categories": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "price",
+    "stock",
+    "category"
+  ],
+  "additionalProperties": true
+}
